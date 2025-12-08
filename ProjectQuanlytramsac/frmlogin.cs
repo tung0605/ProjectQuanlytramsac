@@ -29,7 +29,10 @@ namespace ProjectQuanlytramsac
 
         private void button1_Click(object sender, EventArgs e)
         {
-   
+            frmmanagement f = new frmmanagement();
+            this.Hide();
+            f.ShowDialog();
+            this.Show();
         }
 
         private void txtnamelogin_TextChanged(object sender, EventArgs e)

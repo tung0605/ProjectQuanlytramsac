@@ -16,5 +16,31 @@ namespace ProjectQuanlytramsac
         {
             InitializeComponent();
         }
+
+        private void pToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numdiscount_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void đToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmaccount f = new frmaccount();
+            f.ShowDialog();
+        }
     }
 }
