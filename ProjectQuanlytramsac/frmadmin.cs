@@ -26,6 +26,8 @@ namespace ProjectQuanlytramsac
 
             // 3. Load dữ liệu Tab Quản lý Trụ sạc
             LoadListTruSac();
+
+            LoadAccount(); // <--- THÊM DÒNG NÀY ĐỂ KÍCH HOẠT TAB TÀI KHOẢN
         }
 
         #region TAB 1: THỐNG KÊ DOANH THU
@@ -224,6 +226,184 @@ namespace ProjectQuanlytramsac
                 }
             }
             catch { MessageBox.Show("Vui lòng chọn trụ cần xóa!"); }
+        }
+
+        #endregion
+
+
+
+
+
+
+
+        // --- KHAI BÁO BIẾN BINDING TÀI KHOẢN ---
+        BindingSource accountList = new BindingSource();
+
+        // --- CẬP NHẬT CONSTRUCTOR ---
+        // Tìm đến public frmadmin() và thêm dòng LoadAccount();
+        /*
+        public frmadmin()
+        {
+            InitializeComponent();
+            // ... các hàm load cũ ...
+            LoadListTruSac();
+            
+            LoadAccount(); // <--- THÊM DÒNG NÀY ĐỂ KÍCH HOẠT TAB TÀI KHOẢN
+        }
+        */
+
+        // --- KHAI BÁO BIẾN BINDING TÀI KHOẢN ---
+        BindingSource accountlist = new BindingSource();
+
+        #region TAB 3: QUẢN LÝ TÀI KHOẢN (HIỂN THỊ FULL DATA + MẬT KHẨU)
+
+        void LoadAccount()
+        {
+            dtgvlistacc.DataSource = accountList;
+            LoadAccountList();
+            LoadAccountComboBox();
+            AddAccountBinding();
+        }
+
+        // 1. Tải danh sách tài khoản
+        void LoadAccountList()
+        {
+            // Lấy danh sách từ DAO (đã sửa để lấy cả PassWord)
+            accountList.DataSource = Account.Instance.GetListAccount();
+
+            // Trang trí bảng
+            if (dtgvlistacc.Columns.Count > 0)
+            {
+                dtgvlistacc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dtgvlistacc.Columns["UserName"].HeaderText = "Tên đăng nhập";
+                dtgvlistacc.Columns["DisplayName"].HeaderText = "Tên hiển thị";
+                dtgvlistacc.Columns["Type"].HeaderText = "Quyền tài khoản";
+                // --- THÊM CỘT MẬT KHẨU ---
+                if (dtgvlistacc.Columns.Contains("PassWord"))
+                    dtgvlistacc.Columns["PassWord"].HeaderText = "Mật khẩu";
+            }
+        }
+
+        // 2. Nạp dữ liệu cho ComboBox Loại tài khoản (Giữ nguyên)
+        void LoadAccountComboBox()
+        {
+            cbtypeacc.Items.Clear();
+            cbtypeacc.Items.Add("Nhân viên"); // Index 0 -> Type = 0
+            cbtypeacc.Items.Add("Admin");     // Index 1 -> Type = 1
+            cbtypeacc.SelectedIndex = 0;
+        }
+
+        // 3. Binding: Liên kết dữ liệu từ bảng vào ô nhập (THÊM MẬT KHẨU)
+        void AddAccountBinding()
+        {
+            txtnameacc.DataBindings.Clear();
+            txtshowname.DataBindings.Clear();
+            txtpassword.DataBindings.Clear(); // Xóa binding cũ của mật khẩu (nếu có)
+
+            // Binding Tên đăng nhập, Tên hiển thị
+            txtnameacc.DataBindings.Add(new Binding("Text", dtgvlistacc.DataSource, "UserName", true, DataSourceUpdateMode.Never));
+            txtshowname.DataBindings.Add(new Binding("Text", dtgvlistacc.DataSource, "DisplayName", true, DataSourceUpdateMode.Never));
+
+            // --- BINDING MẬT KHẨU (Hiện thẳng lên ô txtpassword) ---
+            txtpassword.DataBindings.Add(new Binding("Text", dtgvlistacc.DataSource, "PassWord", true, DataSourceUpdateMode.Never));
+
+            // Logic cập nhật ComboBox Loại TK
+            txtnameacc.TextChanged += Txtnameacc_TextChanged;
+        }
+
+        // Hàm phụ để cập nhật ComboBox khi chọn dòng khác trên bảng (Giữ nguyên)
+        private void Txtnameacc_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dtgvlistacc.SelectedCells.Count > 0)
+                {
+                    var cellValue = dtgvlistacc.SelectedCells[0].OwningRow.Cells["Type"].Value;
+                    if (cellValue != DBNull.Value)
+                    {
+                        int id = (int)cellValue;
+                        if (id == 1) cbtypeacc.SelectedIndex = 1;
+                        else cbtypeacc.SelectedIndex = 0;
+                    }
+                }
+            }
+            catch { }
+        }
+
+        // --- SỰ KIỆN NÚT BẤM ---
+
+        // 1. Nút XEM (btnviewacc)
+        private void btnviewacc_Click(object sender, EventArgs e)
+        {
+            LoadAccountList();
+        }
+
+        // 2. Nút THÊM (btnaddacc) - Giữ nguyên logic Password mặc định '0'
+        private void btnaddacc_Click(object sender, EventArgs e)
+        {
+            string userName = txtnameacc.Text;
+            string displayName = txtshowname.Text;
+            int type = cbtypeacc.SelectedIndex;
+
+            try
+            {
+                if (Account.Instance.InsertAccount(userName, displayName, type))
+                {
+                    MessageBox.Show("Thêm tài khoản thành công!\nMật khẩu mặc định là: admin");
+                    LoadAccountList();
+                }
+                else
+                {
+                    MessageBox.Show("Thêm thất bại (Tên đăng nhập đã tồn tại).");
+                }
+            }
+            catch { MessageBox.Show("Lỗi hệ thống khi thêm tài khoản."); }
+        }
+
+        // 3. Nút SỬA (btnchangeacc) -> Cập nhật cả Mật khẩu
+        private void btnchangeacc_Click(object sender, EventArgs e)
+        {
+            string userName = txtnameacc.Text;
+            string displayName = txtshowname.Text;
+            int type = cbtypeacc.SelectedIndex;
+            string password = txtpassword.Text; // LẤY MẬT KHẨU TỪ Ô NHẬP
+
+            // Gọi hàm Update có thêm tham số password (Đã sửa trong DAO)
+            if (Account.Instance.UpdateAccount(userName, displayName, type, password))
+            {
+                MessageBox.Show("Cập nhật thông tin & mật khẩu thành công!");
+                LoadAccountList();
+            }
+            else
+            {
+                MessageBox.Show("Cập nhật thất bại.");
+            }
+        }
+
+        // 4. Nút XÓA (btnremoveacc) - Giữ nguyên
+        private void btnremoveacc_Click(object sender, EventArgs e)
+        {
+            string userName = txtnameacc.Text;
+
+            // Bảo vệ tài khoản Admin gốc
+            if (userName.ToLower() == "admin")
+            {
+                MessageBox.Show("Không được xóa tài khoản Admin gốc!");
+                return;
+            }
+
+            if (MessageBox.Show("Bạn có chắc muốn xóa tài khoản này?", "Cảnh báo", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                if (Account.Instance.DeleteAccount(userName))
+                {
+                    MessageBox.Show("Xóa thành công!");
+                    LoadAccountList();
+                }
+                else
+                {
+                    MessageBox.Show("Xóa thất bại.");
+                }
+            }
         }
 
         #endregion

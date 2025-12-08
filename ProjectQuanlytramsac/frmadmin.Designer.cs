@@ -466,6 +466,7 @@
             this.btnremoveacc.TabIndex = 1;
             this.btnremoveacc.Text = "Xóa";
             this.btnremoveacc.UseVisualStyleBackColor = true;
+            this.btnremoveacc.Click += new System.EventHandler(this.btnremoveacc_Click);
             // 
             // btnchangeacc
             // 
@@ -475,6 +476,7 @@
             this.btnchangeacc.TabIndex = 1;
             this.btnchangeacc.Text = "Sửa";
             this.btnchangeacc.UseVisualStyleBackColor = true;
+            this.btnchangeacc.Click += new System.EventHandler(this.btnchangeacc_Click);
             // 
             // btnaddacc
             // 
@@ -484,6 +486,7 @@
             this.btnaddacc.TabIndex = 1;
             this.btnaddacc.Text = "Thêm";
             this.btnaddacc.UseVisualStyleBackColor = true;
+            this.btnaddacc.Click += new System.EventHandler(this.btnaddacc_Click);
             // 
             // btnviewacc
             // 
@@ -493,6 +496,7 @@
             this.btnviewacc.TabIndex = 1;
             this.btnviewacc.Text = "Xem";
             this.btnviewacc.UseVisualStyleBackColor = true;
+            this.btnviewacc.Click += new System.EventHandler(this.btnviewacc_Click);
             // 
             // panel2
             // 
