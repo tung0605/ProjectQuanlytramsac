@@ -52,12 +52,13 @@
     <Compile Include="DAO\item.cs" />
     <Compile Include="DAO\trusac.cs" />
     <Compile Include="DTO\bills.cs" />
+    <Compile Include="DTO\changeinfo.cs" />
     <Compile Include="DTO\items.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="frmchangepass.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="frmchangepass.Designer.cs">
+      <DependentUpon>frmchangepass.cs</DependentUpon>
     </Compile>
     <Compile Include="frmadmin.cs">
       <SubType>Form</SubType>
@@ -85,8 +86,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="frmchangepass.resx">
+      <DependentUpon>frmchangepass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmadmin.resx">
       <DependentUpon>frmadmin.cs</DependentUpon>

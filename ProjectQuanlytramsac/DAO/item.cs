@@ -16,19 +16,23 @@ namespace ProjectQuanlytramsac.DAO
 
         private item() { }
 
+        // Trong file DAO/item.cs (hoặc nơi bạn viết hàm loaditemlist)
         public List<items> loaditemlist()
         {
-            List<items> itemlist = new List<items>();
-            string query = "SELECT * FROM TruSac";
+            // --- QUAN TRỌNG: Phải tạo list mới ở đây ---
+            List<items> listTruSac = new List<items>();
+            // -------------------------------------------
+
+            string query = "SELECT * FROM TruSac"; // Hoặc câu lệnh lấy dữ liệu của bạn
             DataTable data = DataProvider.Instance.ExcuteQuery(query);
 
-            foreach (DataRow row in data.Rows)
+            foreach (DataRow item in data.Rows)
             {
-                items it = new items(row);
-                itemlist.Add(it);
+                items trusac = new items(item);
+                listTruSac.Add(trusac);
             }
 
-            return itemlist;
+            return listTruSac;
         }
 
         public void UpdateStatus(int idTru, string status)

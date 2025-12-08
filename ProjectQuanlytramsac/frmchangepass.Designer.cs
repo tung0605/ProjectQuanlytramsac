@@ -1,6 +1,6 @@
 ﻿namespace ProjectQuanlytramsac
 {
-    partial class frmaccount
+    partial class frmchangepass
     {
         /// <summary>
         /// Required designer variable.
@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtnamelogin = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtshowname = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtcurrentpass = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtnewpass = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtacpnewpass = new System.Windows.Forms.TextBox();
+            this.btnaccept = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -51,15 +52,15 @@
             this.label1.Text = "Tên đăng nhập:";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox1
+            // txtnamelogin
             // 
-            this.textBox1.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(213, 30);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(217, 28);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtnamelogin.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtnamelogin.Location = new System.Drawing.Point(213, 30);
+            this.txtnamelogin.Name = "txtnamelogin";
+            this.txtnamelogin.ReadOnly = true;
+            this.txtnamelogin.Size = new System.Drawing.Size(217, 28);
+            this.txtnamelogin.TabIndex = 0;
+            this.txtnamelogin.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -72,14 +73,14 @@
             this.label2.Text = "Tên hiển thị:";
             this.label2.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox2
+            // txtshowname
             // 
-            this.textBox2.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(213, 80);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(217, 28);
-            this.textBox2.TabIndex = 1;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtshowname.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtshowname.Location = new System.Drawing.Point(213, 80);
+            this.txtshowname.Name = "txtshowname";
+            this.txtshowname.Size = new System.Drawing.Size(217, 28);
+            this.txtshowname.TabIndex = 1;
+            this.txtshowname.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label3
             // 
@@ -92,14 +93,14 @@
             this.label3.Text = "Mật khẩu:";
             this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox3
+            // txtcurrentpass
             // 
-            this.textBox3.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(213, 130);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(217, 28);
-            this.textBox3.TabIndex = 1;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtcurrentpass.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtcurrentpass.Location = new System.Drawing.Point(213, 130);
+            this.txtcurrentpass.Name = "txtcurrentpass";
+            this.txtcurrentpass.Size = new System.Drawing.Size(217, 28);
+            this.txtcurrentpass.TabIndex = 2;
+            this.txtcurrentpass.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label4
             // 
@@ -112,14 +113,14 @@
             this.label4.Text = "Mật khẩu mới:";
             this.label4.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox4
+            // txtnewpass
             // 
-            this.textBox4.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(213, 180);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(217, 28);
-            this.textBox4.TabIndex = 1;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtnewpass.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtnewpass.Location = new System.Drawing.Point(213, 180);
+            this.txtnewpass.Name = "txtnewpass";
+            this.txtnewpass.Size = new System.Drawing.Size(217, 28);
+            this.txtnewpass.TabIndex = 3;
+            this.txtnewpass.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label5
             // 
@@ -132,31 +133,42 @@
             this.label5.Text = "Xác nhận mật khẩu:";
             this.label5.Click += new System.EventHandler(this.label1_Click);
             // 
-            // textBox5
+            // txtacpnewpass
             // 
-            this.textBox5.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(213, 230);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(217, 28);
-            this.textBox5.TabIndex = 1;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtacpnewpass.Font = new System.Drawing.Font("Google Sans Flex Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtacpnewpass.Location = new System.Drawing.Point(213, 230);
+            this.txtacpnewpass.Name = "txtacpnewpass";
+            this.txtacpnewpass.Size = new System.Drawing.Size(217, 28);
+            this.txtacpnewpass.TabIndex = 4;
+            this.txtacpnewpass.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // frmaccount
+            // btnaccept
             // 
+            this.btnaccept.Location = new System.Drawing.Point(327, 279);
+            this.btnaccept.Name = "btnaccept";
+            this.btnaccept.Size = new System.Drawing.Size(120, 40);
+            this.btnaccept.TabIndex = 5;
+            this.btnaccept.Text = "Xác nhận";
+            this.btnaccept.UseVisualStyleBackColor = true;
+            // 
+            // frmchangepass
+            // 
+            this.AcceptButton = this.btnaccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(479, 292);
-            this.Controls.Add(this.textBox5);
+            this.ClientSize = new System.Drawing.Size(477, 354);
+            this.Controls.Add(this.btnaccept);
+            this.Controls.Add(this.txtacpnewpass);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txtnewpass);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtcurrentpass);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtshowname);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtnamelogin);
             this.Controls.Add(this.label1);
-            this.Name = "frmaccount";
+            this.Name = "frmchangepass";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Thông tin cá nhân";
             this.ResumeLayout(false);
@@ -167,14 +179,15 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtnamelogin;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtshowname;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtcurrentpass;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtnewpass;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtacpnewpass;
+        private System.Windows.Forms.Button btnaccept;
     }
 }

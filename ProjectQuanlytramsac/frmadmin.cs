@@ -130,6 +130,7 @@ namespace ProjectQuanlytramsac
             cbpower.Items.AddRange(new object[] { "1.2", "2.2", "3.5", "7.4", "11", "22", "30", "60", "120", "150", "180", "250", "360" });
         }
 
+
         void AddTruSacBinding()
         {
             txbid.DataBindings.Clear();
@@ -237,6 +238,16 @@ namespace ProjectQuanlytramsac
         private void label8_Click(object sender, EventArgs e) { }
 
         private void cbitemstatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
         {
 
         }

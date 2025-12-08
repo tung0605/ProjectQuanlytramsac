@@ -75,6 +75,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cbpower = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtpassword = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel7.SuspendLayout();
@@ -360,10 +363,13 @@
             // panel9
             // 
             this.panel9.Controls.Add(this.cbtypeacc);
+            this.panel9.Controls.Add(this.txtpassword);
             this.panel9.Controls.Add(this.txtshowname);
             this.panel9.Controls.Add(this.txtnameacc);
+            this.panel9.Controls.Add(this.label10);
             this.panel9.Controls.Add(this.label7);
             this.panel9.Controls.Add(this.label6);
+            this.panel9.Controls.Add(this.label11);
             this.panel9.Controls.Add(this.label5);
             this.panel9.Location = new System.Drawing.Point(473, 51);
             this.panel9.Name = "panel9";
@@ -373,23 +379,22 @@
             // cbtypeacc
             // 
             this.cbtypeacc.FormattingEnabled = true;
-            this.cbtypeacc.Location = new System.Drawing.Point(120, 143);
+            this.cbtypeacc.Location = new System.Drawing.Point(121, 241);
             this.cbtypeacc.Name = "cbtypeacc";
             this.cbtypeacc.Size = new System.Drawing.Size(135, 21);
             this.cbtypeacc.TabIndex = 2;
             // 
             // txtshowname
             // 
-            this.txtshowname.Location = new System.Drawing.Point(118, 95);
+            this.txtshowname.Location = new System.Drawing.Point(119, 150);
             this.txtshowname.Name = "txtshowname";
             this.txtshowname.Size = new System.Drawing.Size(137, 20);
             this.txtshowname.TabIndex = 1;
             // 
             // txtnameacc
             // 
-            this.txtnameacc.Location = new System.Drawing.Point(118, 49);
+            this.txtnameacc.Location = new System.Drawing.Point(119, 107);
             this.txtnameacc.Name = "txtnameacc";
-            this.txtnameacc.ReadOnly = true;
             this.txtnameacc.Size = new System.Drawing.Size(137, 20);
             this.txtnameacc.TabIndex = 1;
             // 
@@ -397,7 +402,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(21, 148);
+            this.label7.Location = new System.Drawing.Point(22, 243);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(93, 16);
             this.label7.TabIndex = 0;
@@ -407,7 +412,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(21, 99);
+            this.label6.Location = new System.Drawing.Point(22, 153);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(78, 16);
             this.label6.TabIndex = 0;
@@ -418,7 +423,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(21, 50);
+            this.label5.Location = new System.Drawing.Point(22, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(91, 16);
             this.label5.TabIndex = 0;
@@ -557,6 +562,37 @@
             this.label3.Text = "THÔNG TIN TRỤ SẠC";
             this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(22, 198);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(64, 16);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Mật khẩu:";
+            this.label10.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // txtpassword
+            // 
+            this.txtpassword.Location = new System.Drawing.Point(119, 193);
+            this.txtpassword.Name = "txtpassword";
+            this.txtpassword.Size = new System.Drawing.Size(137, 20);
+            this.txtpassword.TabIndex = 1;
+            this.txtpassword.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.Color.SteelBlue;
+            this.label11.Location = new System.Drawing.Point(53, 38);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(180, 19);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "THÔNG TIN TÀI KHOẢN";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
+            // 
             // frmadmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -637,5 +673,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtpassword;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }

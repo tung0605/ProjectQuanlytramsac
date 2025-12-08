@@ -205,6 +205,7 @@
             // 
             // flpitem
             // 
+            this.flpitem.AutoScroll = true;
             this.flpitem.Location = new System.Drawing.Point(12, 27);
             this.flpitem.Name = "flpitem";
             this.flpitem.Size = new System.Drawing.Size(577, 545);

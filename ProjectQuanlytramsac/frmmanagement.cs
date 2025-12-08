@@ -15,12 +15,19 @@ namespace ProjectQuanlytramsac
         private DateTime timeBatDauSac;
         private int phanTramGiamGia = 0;
 
+        // --- THÊM BIẾN NÀY ĐỂ HẾT LỖI ---
+        private changeinfo loginAccount;
+        // -------------------------------
+
         // Bộ định dạng Tiếng Việt (3,5 k)
         System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("vi-VN");
 
-        public frmmanagement()
+        // --- SỬA CONSTRUCTOR ĐỂ NHẬN TÀI KHOẢN ---
+        public frmmanagement(changeinfo acc)
         {
             InitializeComponent();
+
+            this.loginAccount = acc; // Lưu lại tài khoản
 
             if (System.ComponentModel.LicenseManager.UsageMode == System.ComponentModel.LicenseUsageMode.Designtime)
                 return;
@@ -29,6 +36,17 @@ namespace ProjectQuanlytramsac
             {
                 LoadTramSac();
                 LoadCombobox();
+
+                // Hiển thị tên người dùng lên Menu
+                if (acc != null)
+                {
+                    thôngTinCáNhânToolStripMenuItem.Text = $"Thông tin ({acc.DisplayName})";
+
+                    // Phân quyền: Nếu là Nhân viên (Type = 0) thì ẩn nút Admin
+                    // (Giả sử Type 1 là Admin)
+                    // pToolStripMenuItem là nút Admin của bạn
+                    pToolStripMenuItem.Enabled = (acc.Type == 1);
+                }
             }
             catch { }
         }
@@ -38,28 +56,26 @@ namespace ProjectQuanlytramsac
         void LoadTramSac()
         {
             flpitem.Controls.Clear();
+
+            // 1. Lấy dữ liệu mới nhất từ SQL
             List<items> listTru = item.Instance.loaditemlist();
 
             foreach (items it in listTru)
             {
                 Button btn = new Button() { Width = items.itemwidth, Height = items.itemheight };
-
-                // Hiển thị thông tin
                 btn.Text = it.TenTru + "\n" + it.CongSuatKW + "kW\n" + it.TrangThai;
                 btn.Tag = it;
 
-                // --- SỬA ĐOẠN NÀY ĐỂ BẮT MÀU CHUẨN HƠN ---
-                // 1. Trim(): Cắt bỏ khoảng trắng thừa ở đầu đuôi (quan trọng)
-                // 2. ToLower(): Đưa hết về chữ thường để so sánh (Đang Sạc = đang sạc)
-                string trangThaiChuan = it.TrangThai.Trim().ToLower();
+                // 2. XỬ LÝ CHUỖI TRƯỚC KHI SO SÁNH (QUAN TRỌNG)
+                string statusChuan = it.TrangThai.Trim().ToLower();
 
-                switch (trangThaiChuan)
+                switch (statusChuan)
                 {
                     case "trống":
                         btn.BackColor = Color.LightGreen;
                         break;
 
-                    case "đang sạc": // Chỉ cần viết thường ở đây
+                    case "đang sạc":
                         btn.BackColor = Color.OrangeRed;
                         break;
 
@@ -68,11 +84,9 @@ namespace ProjectQuanlytramsac
                         break;
 
                     default:
-                        // Nếu vẫn không đổi màu, hãy cho nó màu Vàng để biết là đang bị sai chữ
-                        btn.BackColor = Color.Yellow;
+                        btn.BackColor = Color.White;
                         break;
                 }
-                // -------------------------------------------
 
                 btn.Click += btn_Click;
                 flpitem.Controls.Add(btn);
@@ -108,15 +122,14 @@ namespace ProjectQuanlytramsac
             {
                 timeBatDauSac = bill.Instance.GetDateCheckIn(idBill);
 
-                // CẤU TRÚC LISTVIEW: 
-                // Cột 0: Thời gian | Cột 1: Số điện | Cột 2: Công suất | Cột 3: Thành tiền
-
                 ListViewItem lsvItem = new ListViewItem("Điện năng (00:00:00)");
                 lsvItem.SubItems.Add("0.0"); // Cột 1: Số điện
 
-                // --- SỬA Ở ĐÂY: Hiện đúng công suất của trụ ---
-                lsvItem.SubItems.Add(selectedTru.CongSuatKW.ToString()); // Cột 2: Công suất (7.4, 30, 120...)
-                                                                         // ----------------------------------------------
+                // Cột 2: Hiện công suất thực tế
+                if (selectedTru != null)
+                    lsvItem.SubItems.Add(selectedTru.CongSuatKW.ToString());
+                else
+                    lsvItem.SubItems.Add("0");
 
                 lsvItem.SubItems.Add("0");   // Cột 3: Thành tiền
                 lsvbill.Items.Add(lsvItem);
@@ -138,18 +151,19 @@ namespace ProjectQuanlytramsac
         {
             selectedTru = (sender as Button).Tag as items;
 
-            // Hiện rõ công suất lên tiêu đề Form
             this.Text = $"Đang chọn: {selectedTru.TenTru} (Công suất: {selectedTru.CongSuatKW} kW)";
 
             ShowBill(selectedTru.ID);
 
-            if (selectedTru.TrangThai == "Trống")
+            string status = selectedTru.TrangThai.Trim().ToLower();
+
+            if (status == "trống")
             {
                 btnstart.Enabled = true;
                 btnpay.Enabled = false;
                 btnrepair.Text = "Báo hỏng";
             }
-            else if (selectedTru.TrangThai == "Đang sạc")
+            else if (status == "đang sạc")
             {
                 btnstart.Enabled = false;
                 btnpay.Enabled = true;
@@ -191,7 +205,6 @@ namespace ProjectQuanlytramsac
                     DateTime timeVao = bill.Instance.GetDateCheckIn(idBill);
                     double soGio = (DateTime.Now - timeVao).TotalHours;
 
-                    // Tính toán theo công suất thực
                     double soKwh = selectedTru.CongSuatKW * soGio;
                     double tongTienGoc = soKwh * 3000;
 
@@ -220,10 +233,14 @@ namespace ProjectQuanlytramsac
         private void btnrepair_Click(object sender, EventArgs e)
         {
             if (selectedTru == null) return;
-            if (selectedTru.TrangThai == "Trống")
+
+            string status = selectedTru.TrangThai.Trim().ToLower();
+
+            if (status == "trống")
                 item.Instance.UpdateStatus(selectedTru.ID, "Bảo trì");
-            else if (selectedTru.TrangThai == "Bảo trì")
+            else if (status == "bảo trì")
                 item.Instance.UpdateStatus(selectedTru.ID, "Trống");
+
             LoadTramSac();
         }
 
@@ -235,17 +252,15 @@ namespace ProjectQuanlytramsac
 
         private void timersac_Tick(object sender, EventArgs e)
         {
-            if (selectedTru == null || selectedTru.TrangThai != "Đang sạc")
+            if (selectedTru == null || selectedTru.TrangThai.Trim().ToLower() != "đang sạc")
             {
                 timerSac.Stop();
                 return;
             }
 
-            // 1. Tính toán
             TimeSpan duration = DateTime.Now - timeBatDauSac;
             double soGio = duration.TotalHours;
 
-            // Công suất thực của trụ * Số giờ = Số kWh
             double kwh = selectedTru.CongSuatKW * soGio;
             double tongTienGoc = kwh * 3000;
 
@@ -253,26 +268,16 @@ namespace ProjectQuanlytramsac
             double thucThu = tongTienGoc - tienGiam;
             if (thucThu < 0) thucThu = 0;
 
-            // 3. Hiển thị
             if (lsvbill.Items.Count > 0)
             {
                 ListViewItem item = lsvbill.Items[0];
-
-                // Cột 1: Số điện
                 item.SubItems[1].Text = kwh.ToString("0.0") + " kWh";
 
-                // --- SỬA Ở ĐÂY: Cột 2 hiển thị Công suất ---
                 if (item.SubItems.Count > 2)
-                {
                     item.SubItems[2].Text = selectedTru.CongSuatKW.ToString();
-                }
-                // -------------------------------------------
 
-                // Cột 3: Thành tiền (3,5 k)
                 if (item.SubItems.Count > 3)
-                {
                     item.SubItems[3].Text = (tongTienGoc / 1000).ToString("0.#", culture) + " k";
-                }
 
                 string strTime = string.Format("{0:00}:{1:00}:{2:00}", duration.Hours, duration.Minutes, duration.Seconds);
                 item.Text = "Điện năng (" + strTime + ")";
@@ -283,17 +288,34 @@ namespace ProjectQuanlytramsac
 
         #endregion
 
-        // CÁC HÀM CỨU HỘ GIAO DIỆN
-        private void pToolStripMenuItem_Click(object sender, EventArgs e) {
+        // CÁC HÀM CỨU HỘ GIAO DIỆN & MENU
+
+        private void pToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             frmadmin f = new frmadmin();
             f.ShowDialog();
+            LoadTramSac(); // Cập nhật màu sau khi tắt Admin
         }
+
+        // --- SỰ KIỆN NÚT THÔNG TIN CÁ NHÂN ---
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmaccount f = new frmaccount();
+            // Truyền loginAccount sang form đổi mật khẩu
+            frmchangepass f = new frmchangepass(loginAccount);
+
+            // Đăng ký sự kiện cập nhật tên
+            f.UpdateAccountEvent += F_UpdateAccountEvent;
+
             f.ShowDialog();
-            LoadTramSac();
         }
+
+        // Hàm xử lý khi Form con báo về là "Đã đổi tên xong"
+        void F_UpdateAccountEvent(object sender, frmchangepass.AccountEvent e)
+        {
+            // Cập nhật lại tên hiển thị trên Menu
+            thôngTinCáNhânToolStripMenuItem.Text = $"Thông tin ({e.Acc.DisplayName})";
+        }
+
         private void đToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void lsvbill_SelectedIndexChanged(object sender, EventArgs e) { }
         private void numdiscount_ValueChanged(object sender, EventArgs e) { }
