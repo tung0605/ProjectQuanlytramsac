@@ -19,7 +19,8 @@ namespace ProjectQuanlytramsac
 
         private void pToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            frmadmin f = new frmadmin();
+            f.ShowDialog();
         }
 
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
