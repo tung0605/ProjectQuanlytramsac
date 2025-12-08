@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectQuanlytramsac.DAO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,11 +30,29 @@ namespace ProjectQuanlytramsac
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string username = txtnamelogin.Text;
+            string password = txtpassword.Text;
+            if (login(username, password))
+            {
             frmmanagement f = new frmmanagement();
             this.Hide();
             f.ShowDialog();
             this.Show();
+
+            }
+            else
+            {
+                MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu");
+            }
         }
+
+        bool login(string username, string password)
+        {
+            return Account.Instance.login(username, password);
+        }
+
+
+
 
         private void txtnamelogin_TextChanged(object sender, EventArgs e)
         {

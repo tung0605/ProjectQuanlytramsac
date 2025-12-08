@@ -17,21 +17,9 @@ namespace ProjectQuanlytramsac
         public frmadmin()
         {
             InitializeComponent();
-            loadaccountlist();
-        }
-
-        void loadaccountlist()
-        {
-            string query = "EXEC getaccbyusername @username";
-
-            DataProvider provider = new DataProvider();
-
-            dtgvlistacc.DataSource = provider.ExecuteQuery(query, new object[] { "admin" }); 
-
-
-
 
         }
+
 
 
 

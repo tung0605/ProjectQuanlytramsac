@@ -33,8 +33,8 @@
             this.lblshow = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblnamelogin = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.txtnamelogin = new System.Windows.Forms.TextBox();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.lblpassword = new System.Windows.Forms.Label();
             this.txtpassword = new System.Windows.Forms.TextBox();
             this.btnlogin = new System.Windows.Forms.Button();
@@ -69,7 +69,7 @@
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(403, 75);
-            this.panel2.TabIndex = 2;
+            this.panel2.TabIndex = 0;
             // 
             // lblnamelogin
             // 
@@ -82,15 +82,6 @@
             this.lblnamelogin.TabIndex = 0;
             this.lblnamelogin.Text = "Username";
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.lblpassword);
-            this.panel3.Controls.Add(this.txtpassword);
-            this.panel3.Location = new System.Drawing.Point(3, 84);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(403, 72);
-            this.panel3.TabIndex = 2;
-            // 
             // txtnamelogin
             // 
             this.txtnamelogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -102,9 +93,19 @@
             this.txtnamelogin.Multiline = true;
             this.txtnamelogin.Name = "txtnamelogin";
             this.txtnamelogin.Size = new System.Drawing.Size(300, 30);
-            this.txtnamelogin.TabIndex = 1;
+            this.txtnamelogin.TabIndex = 0;
             this.txtnamelogin.Tag = "Username";
+            this.txtnamelogin.Text = "admin";
             this.txtnamelogin.TextChanged += new System.EventHandler(this.txtnamelogin_TextChanged);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lblpassword);
+            this.panel3.Controls.Add(this.txtpassword);
+            this.panel3.Location = new System.Drawing.Point(3, 84);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(403, 72);
+            this.panel3.TabIndex = 1;
             // 
             // lblpassword
             // 
@@ -131,6 +132,7 @@
             this.txtpassword.Size = new System.Drawing.Size(300, 30);
             this.txtpassword.TabIndex = 1;
             this.txtpassword.Tag = "Username";
+            this.txtpassword.Text = "admin";
             this.txtpassword.TextChanged += new System.EventHandler(this.txtpassword_TextChanged);
             // 
             // btnlogin
@@ -138,12 +140,13 @@
             this.btnlogin.AutoSize = true;
             this.btnlogin.BackColor = System.Drawing.Color.Transparent;
             this.btnlogin.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnlogin.BackgroundImage")));
+            this.btnlogin.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnlogin.Font = new System.Drawing.Font("Google Sans Flex", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnlogin.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.btnlogin.Location = new System.Drawing.Point(76, 162);
             this.btnlogin.Name = "btnlogin";
             this.btnlogin.Size = new System.Drawing.Size(262, 48);
-            this.btnlogin.TabIndex = 3;
+            this.btnlogin.TabIndex = 2;
             this.btnlogin.Text = "Sign Up";
             this.btnlogin.UseVisualStyleBackColor = false;
             this.btnlogin.Click += new System.EventHandler(this.button1_Click);
@@ -160,6 +163,7 @@
             // 
             // frmlogin
             // 
+            this.AcceptButton = this.btnlogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;

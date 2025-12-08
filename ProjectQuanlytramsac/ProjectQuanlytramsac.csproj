@@ -46,7 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\Account.cs" />
+    <Compile Include="DAO\bill.cs" />
     <Compile Include="DAO\DataProvider.cs" />
+    <Compile Include="DAO\item.cs" />
+    <Compile Include="DTO\bills.cs" />
+    <Compile Include="DTO\items.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +63,12 @@
     </Compile>
     <Compile Include="frmadmin.Designer.cs">
       <DependentUpon>frmadmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmbillinfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmbillinfo.Designer.cs">
+      <DependentUpon>frmbillinfo.cs</DependentUpon>
     </Compile>
     <Compile Include="frmmanagement.cs">
       <SubType>Form</SubType>
@@ -78,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmadmin.resx">
       <DependentUpon>frmadmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmbillinfo.resx">
+      <DependentUpon>frmbillinfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmlogin.resx">
       <DependentUpon>frmlogin.cs</DependentUpon>
@@ -107,8 +121,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
