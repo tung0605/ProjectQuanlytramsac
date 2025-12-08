@@ -43,16 +43,36 @@ namespace ProjectQuanlytramsac
             foreach (items it in listTru)
             {
                 Button btn = new Button() { Width = items.itemwidth, Height = items.itemheight };
-                // Hiện tên và công suất lên nút cho dễ nhìn
+
+                // Hiển thị thông tin
                 btn.Text = it.TenTru + "\n" + it.CongSuatKW + "kW\n" + it.TrangThai;
                 btn.Tag = it;
 
-                switch (it.TrangThai)
+                // --- SỬA ĐOẠN NÀY ĐỂ BẮT MÀU CHUẨN HƠN ---
+                // 1. Trim(): Cắt bỏ khoảng trắng thừa ở đầu đuôi (quan trọng)
+                // 2. ToLower(): Đưa hết về chữ thường để so sánh (Đang Sạc = đang sạc)
+                string trangThaiChuan = it.TrangThai.Trim().ToLower();
+
+                switch (trangThaiChuan)
                 {
-                    case "Trống": btn.BackColor = Color.LightGreen; break;
-                    case "Đang sạc": btn.BackColor = Color.OrangeRed; break;
-                    case "Bảo trì": btn.BackColor = Color.Gray; break;
+                    case "trống":
+                        btn.BackColor = Color.LightGreen;
+                        break;
+
+                    case "đang sạc": // Chỉ cần viết thường ở đây
+                        btn.BackColor = Color.OrangeRed;
+                        break;
+
+                    case "bảo trì":
+                        btn.BackColor = Color.Gray;
+                        break;
+
+                    default:
+                        // Nếu vẫn không đổi màu, hãy cho nó màu Vàng để biết là đang bị sai chữ
+                        btn.BackColor = Color.Yellow;
+                        break;
                 }
+                // -------------------------------------------
 
                 btn.Click += btn_Click;
                 flpitem.Controls.Add(btn);
@@ -191,7 +211,8 @@ namespace ProjectQuanlytramsac
                     LoadTramSac();
                     ShowBill(idTru);
 
-
+                    frmbillinfo f = new frmbillinfo(idBill);
+                    f.ShowDialog();
                 }
             }
         }
@@ -263,11 +284,15 @@ namespace ProjectQuanlytramsac
         #endregion
 
         // CÁC HÀM CỨU HỘ GIAO DIỆN
-        private void pToolStripMenuItem_Click(object sender, EventArgs e) { }
+        private void pToolStripMenuItem_Click(object sender, EventArgs e) {
+            frmadmin f = new frmadmin();
+            f.ShowDialog();
+        }
         private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmaccount f = new frmaccount();
             f.ShowDialog();
+            LoadTramSac();
         }
         private void đToolStripMenuItem_Click(object sender, EventArgs e) { }
         private void lsvbill_SelectedIndexChanged(object sender, EventArgs e) { }

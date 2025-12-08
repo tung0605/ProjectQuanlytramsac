@@ -1,6 +1,6 @@
 ﻿namespace ProjectQuanlytramsac
 {
-    partial class frmBillInfo
+    partial class frmbillinfo
     {
         /// <summary>
         /// Required designer variable.
@@ -143,9 +143,9 @@
             // lblbillid
             // 
             this.lblbillid.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblbillid.Location = new System.Drawing.Point(240, 78);
+            this.lblbillid.Location = new System.Drawing.Point(222, 78);
             this.lblbillid.Name = "lblbillid";
-            this.lblbillid.Size = new System.Drawing.Size(25, 15);
+            this.lblbillid.Size = new System.Drawing.Size(55, 15);
             this.lblbillid.TabIndex = 0;
             this.lblbillid.Text = "0";
             this.lblbillid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -154,9 +154,9 @@
             // lblitemid
             // 
             this.lblitemid.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblitemid.Location = new System.Drawing.Point(240, 122);
+            this.lblitemid.Location = new System.Drawing.Point(222, 122);
             this.lblitemid.Name = "lblitemid";
-            this.lblitemid.Size = new System.Drawing.Size(25, 15);
+            this.lblitemid.Size = new System.Drawing.Size(55, 15);
             this.lblitemid.TabIndex = 0;
             this.lblitemid.Text = "0";
             this.lblitemid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -164,9 +164,9 @@
             // lblnameitem
             // 
             this.lblnameitem.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblnameitem.Location = new System.Drawing.Point(240, 166);
+            this.lblnameitem.Location = new System.Drawing.Point(222, 166);
             this.lblnameitem.Name = "lblnameitem";
-            this.lblnameitem.Size = new System.Drawing.Size(25, 15);
+            this.lblnameitem.Size = new System.Drawing.Size(55, 15);
             this.lblnameitem.TabIndex = 0;
             this.lblnameitem.Text = "0";
             this.lblnameitem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -174,9 +174,9 @@
             // lblpower
             // 
             this.lblpower.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblpower.Location = new System.Drawing.Point(240, 210);
+            this.lblpower.Location = new System.Drawing.Point(222, 210);
             this.lblpower.Name = "lblpower";
-            this.lblpower.Size = new System.Drawing.Size(25, 15);
+            this.lblpower.Size = new System.Drawing.Size(55, 15);
             this.lblpower.TabIndex = 0;
             this.lblpower.Text = "0";
             this.lblpower.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -184,9 +184,9 @@
             // lbltimeuse
             // 
             this.lbltimeuse.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbltimeuse.Location = new System.Drawing.Point(240, 254);
+            this.lbltimeuse.Location = new System.Drawing.Point(222, 254);
             this.lbltimeuse.Name = "lbltimeuse";
-            this.lbltimeuse.Size = new System.Drawing.Size(25, 15);
+            this.lbltimeuse.Size = new System.Drawing.Size(55, 15);
             this.lbltimeuse.TabIndex = 0;
             this.lbltimeuse.Text = "0";
             this.lbltimeuse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -195,9 +195,9 @@
             // lblelecuse
             // 
             this.lblelecuse.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblelecuse.Location = new System.Drawing.Point(240, 298);
+            this.lblelecuse.Location = new System.Drawing.Point(222, 298);
             this.lblelecuse.Name = "lblelecuse";
-            this.lblelecuse.Size = new System.Drawing.Size(25, 15);
+            this.lblelecuse.Size = new System.Drawing.Size(55, 15);
             this.lblelecuse.TabIndex = 0;
             this.lblelecuse.Text = "0";
             this.lblelecuse.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -205,9 +205,9 @@
             // lbldiscount
             // 
             this.lbldiscount.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbldiscount.Location = new System.Drawing.Point(240, 342);
+            this.lbldiscount.Location = new System.Drawing.Point(222, 342);
             this.lbldiscount.Name = "lbldiscount";
-            this.lbldiscount.Size = new System.Drawing.Size(25, 15);
+            this.lbldiscount.Size = new System.Drawing.Size(55, 15);
             this.lbldiscount.TabIndex = 0;
             this.lbldiscount.Text = "0";
             this.lbldiscount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -215,9 +215,9 @@
             // lbltotal
             // 
             this.lbltotal.Font = new System.Drawing.Font("Roboto", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbltotal.Location = new System.Drawing.Point(240, 386);
+            this.lbltotal.Location = new System.Drawing.Point(222, 386);
             this.lbltotal.Name = "lbltotal";
-            this.lbltotal.Size = new System.Drawing.Size(25, 15);
+            this.lbltotal.Size = new System.Drawing.Size(55, 15);
             this.lbltotal.TabIndex = 0;
             this.lbltotal.Text = "0";
             this.lbltotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

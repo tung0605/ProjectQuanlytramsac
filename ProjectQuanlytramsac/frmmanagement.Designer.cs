@@ -171,11 +171,6 @@
             this.numdiscount.Size = new System.Drawing.Size(119, 20);
             this.numdiscount.TabIndex = 0;
             this.numdiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numdiscount.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
             this.numdiscount.ValueChanged += new System.EventHandler(this.numdiscount_ValueChanged);
             // 
             // btndiscount
@@ -262,6 +257,7 @@
             // 
             // frmmanagement
             // 
+            this.AcceptButton = this.btnpay;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1091, 584);

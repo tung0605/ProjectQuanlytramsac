@@ -50,6 +50,7 @@
     <Compile Include="DAO\bill.cs" />
     <Compile Include="DAO\DataProvider.cs" />
     <Compile Include="DAO\item.cs" />
+    <Compile Include="DAO\trusac.cs" />
     <Compile Include="DTO\bills.cs" />
     <Compile Include="DTO\items.cs" />
     <Compile Include="Form1.cs">
