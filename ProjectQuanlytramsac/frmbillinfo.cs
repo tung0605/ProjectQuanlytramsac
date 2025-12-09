@@ -76,18 +76,27 @@ namespace ProjectQuanlytramsac
                     // 7. Giảm giá (%)
                     lbldiscount.Text = row["GiamGia"].ToString() + "%";
 
-                    // --- 8. THÀNH TIỀN (SỬA LỖI HIỂN THỊ 0,0 VNĐ) ---
-                    // Cột tongTien đang lưu đơn vị "VNĐ" (Ví dụ: 3.5)
                     double tongTien_K_VND = 0;
                     if (row["tongTien"].ToString() != "")
+                    {
                         // Sử dụng cultureDot để đọc đúng số thập phân (dấu chấm) từ DB
                         tongTien_K_VND = Convert.ToDouble(row["tongTien"], cultureDot);
+                    }
 
-                    // NHÂN NGƯỢC LẠI VỚI 1000 để ra VNĐ (Ví dụ: 3.5 * 1000 = 3500)
-                    double tienThucTe_VN_D = tongTien_K_VND * 1000;
+                    // Giá trị thực tế (giả sử đơn vị trong DB là K VNĐ)
+                    double tienThucTe_VN_D = tongTien_K_VND;
 
-                    // Hiển thị dạng tiền tệ (N0: 3,500 VNĐ, N1: 3,500.0 VNĐ)
-                    lbltotal.Text = tienThucTe_VN_D.ToString("N1", cultureVN) + " VNĐ";
+                    // SỬA ĐỔI LOGIC HIỂN THỊ:
+                    // Mục đích: Nếu giá trị gốc là 3.000 VNĐ, bạn muốn hiển thị 3.00 VNĐ (tức là K VNĐ)
+                    // => Chúng ta dùng giá trị tongTien_K_VND trực tiếp, hoặc chia cho 1000 nếu tongTien là VNĐ.
+
+                    // Giả định rằng tongTien_K_VND đã là giá trị chia cho 1000 (Ví dụ: 3000 VNĐ => 3.00)
+                    double tienHienThi_K_VND = tongTien_K_VND;
+
+                    // Hiển thị dạng số thập phân, giữ 2 chữ số sau dấu phẩy (N2)
+                    // Nếu cultureVN sử dụng dấu phẩy làm dấu thập phân: 3,00 VNĐ
+                    // Nếu cultureVN sử dụng dấu chấm làm dấu thập phân: 3.00 VNĐ
+                    lbltotal.Text = tienHienThi_K_VND.ToString("N2", cultureVN) + " VNĐ";
                 }
             }
             catch (Exception ex)
