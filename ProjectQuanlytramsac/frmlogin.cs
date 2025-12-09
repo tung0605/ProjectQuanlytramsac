@@ -30,6 +30,11 @@ namespace ProjectQuanlytramsac
                 this.Hide();
                 f.ShowDialog();
                 this.Show(); // Hiện lại form đăng nhập khi tắt form chính
+                txtnamelogin.Text = "";
+                txtpassword.Text = "";
+
+                // Đặt con trỏ chuột về ô Username (Tùy chọn)
+                txtnamelogin.Focus();
             }
             else
             {

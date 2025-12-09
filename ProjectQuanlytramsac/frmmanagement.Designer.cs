@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmmanagement));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.pToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thôngTinCáNhânToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,10 @@
             this.cbchargetype = new System.Windows.Forms.ComboBox();
             this.btnstart = new System.Windows.Forms.Button();
             this.timerSac = new System.Windows.Forms.Timer(this.components);
+            this.chứcNăngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thanhToánCtrlTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bắtĐầuSạcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.báoHỏngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -63,7 +68,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pToolStripMenuItem,
-            this.thôngTinCáNhânToolStripMenuItem});
+            this.thôngTinCáNhânToolStripMenuItem,
+            this.chứcNăngToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1091, 24);
@@ -90,14 +96,14 @@
             // đToolStripMenuItem
             // 
             this.đToolStripMenuItem.Name = "đToolStripMenuItem";
-            this.đToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.đToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.đToolStripMenuItem.Text = "Thông tin cá nhân";
             this.đToolStripMenuItem.Click += new System.EventHandler(this.đToolStripMenuItem_Click);
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // panel2
@@ -256,6 +262,41 @@
             this.timerSac.Interval = 1000;
             this.timerSac.Tick += new System.EventHandler(this.timersac_Tick);
             // 
+            // chứcNăngToolStripMenuItem
+            // 
+            this.chứcNăngToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.thanhToánCtrlTToolStripMenuItem,
+            this.bắtĐầuSạcToolStripMenuItem,
+            this.báoHỏngToolStripMenuItem});
+            this.chứcNăngToolStripMenuItem.Name = "chứcNăngToolStripMenuItem";
+            this.chứcNăngToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.chứcNăngToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.chứcNăngToolStripMenuItem.Text = "Chức năng";
+            // 
+            // thanhToánCtrlTToolStripMenuItem
+            // 
+            this.thanhToánCtrlTToolStripMenuItem.Name = "thanhToánCtrlTToolStripMenuItem";
+            this.thanhToánCtrlTToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.thanhToánCtrlTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.thanhToánCtrlTToolStripMenuItem.Text = "Thanh toán";
+            this.thanhToánCtrlTToolStripMenuItem.Click += new System.EventHandler(this.thanhToánCtrlTToolStripMenuItem_Click);
+            // 
+            // bắtĐầuSạcToolStripMenuItem
+            // 
+            this.bắtĐầuSạcToolStripMenuItem.Name = "bắtĐầuSạcToolStripMenuItem";
+            this.bắtĐầuSạcToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.bắtĐầuSạcToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.bắtĐầuSạcToolStripMenuItem.Text = "Bắt đầu sạc";
+            this.bắtĐầuSạcToolStripMenuItem.Click += new System.EventHandler(this.bắtĐầuSạcToolStripMenuItem_Click);
+            // 
+            // báoHỏngToolStripMenuItem
+            // 
+            this.báoHỏngToolStripMenuItem.Name = "báoHỏngToolStripMenuItem";
+            this.báoHỏngToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.báoHỏngToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.báoHỏngToolStripMenuItem.Text = "Báo hỏng";
+            this.báoHỏngToolStripMenuItem.Click += new System.EventHandler(this.báoHỏngToolStripMenuItem_Click);
+            // 
             // frmmanagement
             // 
             this.AcceptButton = this.btnpay;
@@ -267,6 +308,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmmanagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -309,5 +351,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.TextBox txbtotalmoney;
         private System.Windows.Forms.Timer timerSac;
+        private System.Windows.Forms.ToolStripMenuItem chứcNăngToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thanhToánCtrlTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bắtĐầuSạcToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem báoHỏngToolStripMenuItem;
     }
 }

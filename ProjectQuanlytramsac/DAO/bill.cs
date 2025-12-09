@@ -1,6 +1,7 @@
 ﻿using ProjectQuanlytramsac.DTO;
 using System;
 using System.Data;
+using System.Globalization; // Cần thiết để định dạng dấu chấm thập phân cho SQL
 
 namespace ProjectQuanlytramsac.DAO
 {
@@ -23,6 +24,7 @@ namespace ProjectQuanlytramsac.DAO
 
             if (data.Rows.Count > 0)
             {
+                // Giả định class bills tồn tại trong ProjectQuanlytramsac.DTO
                 bills bill = new bills(data.Rows[0]);
                 return bill.ID;
             }
@@ -31,47 +33,46 @@ namespace ProjectQuanlytramsac.DAO
 
         public void InsertBill(int idTruSac, string cheDo, string loaiKhach)
         {
+            // GIỮ NGUYÊN
             string query = string.Format("INSERT INTO HoaDon (idTruSac, dateCheckIn, status, CheDoSac, LoaiKhachHang) VALUES ({0}, GETDATE(), 0, N'{1}', N'{2}')",
                                          idTruSac, cheDo, loaiKhach);
 
             DataProvider.Instance.ExcuteNonQuery(query);
         }
 
-        public void CheckOut(int idBill, double tongTien, double soKwh, int giamGia)
+        // --- HÀM CHECKOUT ĐÃ SỬA: NHẬN 7 ĐỐI SỐ (KHẮC PHỤC CS1501) VÀ CẬP NHẬT ĐẦY ĐỦ DỮ LIỆU ---
+        public void CheckOut(int idBill, double tongTien, double soKwh, int giamGia, int thoiGianSacPhut, string cheDoSac, string loaiKhachHang)
         {
+            // tongTien được truyền vào là tổng tiền thực thu (đã giảm) tính bằng VNĐ.
+
             // --- BƯỚC 1: QUY ĐỔI ĐƠN VỊ TIỀN ---
-            // Bạn muốn lưu 3 nghìn là 3.00 -> Phải chia cho 1000
+            // Quy đổi từ VNĐ sang "k VNĐ" (Ví dụ: 3000 VNĐ -> 3.00) để lưu vào cột 'tongTien'.
+            // Cột 'tongTien' trong DB nên được đổi tên/hiểu là đơn vị 'k VNĐ'
             double tienLuuDatabase = tongTien / 1000;
 
             // --- BƯỚC 2: LÀM TRÒN SỐ LIỆU ---
-            // Làm tròn 2 số thập phân (Ví dụ: 3.456 -> 3.46)
+            // Làm tròn 2 số thập phân
             double tienLamTron = Math.Round(tienLuuDatabase, 2);
             double kwhLamTron = Math.Round(soKwh, 2);
 
             // --- BƯỚC 3: ĐỊNH DẠNG DẤU CHẤM (CHO SQL) ---
             // Bắt buộc dùng CultureInfo.InvariantCulture để ra dấu chấm (3.00) thay vì dấu phẩy
-            System.Globalization.CultureInfo quocTe = System.Globalization.CultureInfo.InvariantCulture;
+            CultureInfo quocTe = CultureInfo.InvariantCulture;
 
-            string sqlTien = tienLamTron.ToString(quocTe); // Kết quả sẽ là "3.00" hoặc "3.50"
-            string sqlKwh = kwhLamTron.ToString(quocTe);   // Kết quả sẽ là "1.25"
+            string sqlTien = tienLamTron.ToString(quocTe);
+            string sqlKwh = kwhLamTron.ToString(quocTe);
 
-            // --- BƯỚC 4: TÍNH THỜI GIAN SẠC (PHÚT) ---
-            string queryGetTime = "SELECT dateCheckIn FROM HoaDon WHERE id = " + idBill;
-            object result = DataProvider.Instance.ExcuteScalar(queryGetTime);
-            int tongPhut = 0;
-            if (result != null)
-            {
-                DateTime timeIn = (DateTime)result;
-                tongPhut = (int)(DateTime.Now - timeIn).TotalMinutes;
-            }
-
-            // --- BƯỚC 5: GỬI LỆNH CẬP NHẬT VÀO SQL ---
-            string query = "UPDATE HoaDon SET dateCheckOut = GETDATE(), status = 1, " +
-                           "tongTien = " + sqlTien + ", " +       // Lưu số nhỏ (3.00)
-                           "soKwhTieuThu = " + sqlKwh + ", " +
-                           "thoiGianSacPhut = " + tongPhut + ", " +
-                           "GiamGia = " + giamGia +
-                           " WHERE id = " + idBill;
+            // --- BƯỚC 4: GỬI LỆNH CẬP NHẬT VÀO SQL ---
+            string query = string.Format(
+                "UPDATE HoaDon SET dateCheckOut = GETDATE(), status = 1, " +
+                "tongTien = {0}, " + // Tiền thực thu (k VNĐ)
+                "soKwhTieuThu = {1}, " + // Sản lượng (kWh)
+                "GiamGia = {2}, " + // Giảm (%)
+                "thoiGianSacPhut = {3}, " + // Số phút
+                "CheDoSac = N'{4}', " + // Chế độ sạc
+                "LoaiKhachHang = N'{5}' " + // Loại khách hàng
+                "WHERE id = {6}",
+                sqlTien, sqlKwh, giamGia, thoiGianSacPhut, cheDoSac, loaiKhachHang, idBill);
 
             DataProvider.Instance.ExcuteNonQuery(query);
         }
@@ -88,7 +89,8 @@ namespace ProjectQuanlytramsac.DAO
             return DateTime.Now; // Fallback nếu lỗi
         }
 
-        // Thêm vào trong class bill của file DAO/bill.cs
+        // Hàm GetBillListByDate: GIỮ NGUYÊN nhưng đã sửa lại nhãn cột [Tiền (k VNĐ)] cho rõ ràng.
+        // --- SỬA TRONG FILE bill.cs (billDAO.cs) ---
         public System.Data.DataTable GetBillListByDate(DateTime checkIn, DateTime checkOut)
         {
             string start = checkIn.ToString("yyyy-MM-dd");
@@ -97,18 +99,19 @@ namespace ProjectQuanlytramsac.DAO
             // Lấy FULL thông tin
             string query = string.Format(
                 "SELECT " +
-                "h.id AS [Mã HĐ], " +                  // Mới
+                "h.id AS [Mã HĐ], " +
                 "t.tenTru AS [Tên trụ], " +
-                "t.LoaiXe AS [Loại xe], " +            // Mới
-                "t.CongSuatKW AS [Công suất (kW)], " + // Mới
-                "h.LoaiKhachHang AS [Khách hàng], " +  // Mới
-                "h.CheDoSac AS [Chế độ sạc], " +       // Mới
+                "t.LoaiXe AS [Loại xe], " +
+                "t.CongSuatKW AS [Công suất (kW)], " +
+                "h.LoaiKhachHang AS [Khách hàng], " +
+                "h.CheDoSac AS [Chế độ sạc], " +
                 "h.dateCheckIn AS [Giờ vào], " +
                 "h.dateCheckOut AS [Giờ ra], " +
-                "h.thoiGianSacPhut AS [Số phút], " +   // Mới (nếu DB bạn đã có cột này)
+                "h.thoiGianSacPhut AS [Số phút], " +
                 "h.soKwhTieuThu AS [Sản lượng (kWh)], " +
                 "h.GiamGia AS [Giảm (%)], " +
-                "h.tongTien AS [Tiền (k VNĐ)] " +
+                // --- ĐÃ SỬA: NHÂN VỚI 1000 VÀ ĐẶT LẠI NHÃN CỘT ---
+                "h.tongTien * 1000 AS [Tiền (k VNĐ)] " +
                 "FROM HoaDon AS h, TruSac AS t " +
                 "WHERE h.idTruSac = t.id " +
                 "AND h.status = 1 " +
@@ -116,5 +119,6 @@ namespace ProjectQuanlytramsac.DAO
 
             return DataProvider.Instance.ExcuteQuery(query);
         }
+
     }
 }

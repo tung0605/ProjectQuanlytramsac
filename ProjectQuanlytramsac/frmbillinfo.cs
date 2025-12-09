@@ -10,7 +10,7 @@ namespace ProjectQuanlytramsac
     {
         private int idBill;
 
-        // Định dạng Tiền Việt (Dùng dấu phẩy ngăn thập phân: 4,0)
+        // Định dạng Tiền Việt (Dùng dấu phẩy ngăn thập phân, ví dụ: 4.000 VNĐ)
         CultureInfo cultureVN = new CultureInfo("vi-VN");
 
         // Định dạng Kỹ thuật (Dùng dấu chấm: 2.34)
@@ -27,10 +27,12 @@ namespace ProjectQuanlytramsac
         {
             try
             {
+                // Truy vấn các trường cần thiết, bao gồm LoaiKhachHang và CheDoSac
                 string query = "SELECT h.id AS BillID, t.id AS TruID, t.tenTru, t.CongSuatKW, " +
-                               "h.dateCheckIn, h.dateCheckOut, h.soKwhTieuThu, h.GiamGia, h.tongTien " +
-                               "FROM HoaDon h, TruSac t " +
-                               "WHERE h.idTruSac = t.id AND h.id = " + idBill;
+                                 "h.dateCheckIn, h.dateCheckOut, h.soKwhTieuThu, h.GiamGia, h.tongTien, " +
+                                 "h.LoaiKhachHang, h.CheDoSac " +
+                                 "FROM HoaDon h, TruSac t " +
+                                 "WHERE h.idTruSac = t.id AND h.id = " + idBill;
 
                 DataTable data = DataProvider.Instance.ExcuteQuery(query);
 
@@ -38,7 +40,7 @@ namespace ProjectQuanlytramsac
                 {
                     DataRow row = data.Rows[0];
 
-                    // 1. Mã hóa đơn (Thêm dấu #) -> #4
+                    // 1. Mã hóa đơn (Thêm dấu #)
                     lblbillid.Text = "#" + row["BillID"].ToString();
 
                     // 2. Mã trụ
@@ -47,10 +49,15 @@ namespace ProjectQuanlytramsac
                     // 3. Tên trụ
                     lblnameitem.Text = row["tenTru"].ToString();
 
-                    // 4. Công suất (Thêm kW) -> 12 kW
+                    // 4. Công suất (Thêm kW)
                     lblpower.Text = row["CongSuatKW"].ToString() + " kW";
 
-                    // 5. Thời gian sạc (Thêm h) -> 0.00 h
+                    // Thêm thông tin mới (Nếu có Label tương ứng trên Form)
+                    // Nếu bạn có label để hiển thị loại khách và chế độ sạc, hãy uncomment:
+                    // lbllaiKhach.Text = row["LoaiKhachHang"].ToString();
+                    // lblchedoSac.Text = row["CheDoSac"].ToString();
+
+                    // 5. Thời gian sạc (Tính giờ)
                     DateTime timeIn = Convert.ToDateTime(row["dateCheckIn"]);
                     DateTime timeOut = DateTime.Now;
                     if (row["dateCheckOut"].ToString() != "")
@@ -59,32 +66,33 @@ namespace ProjectQuanlytramsac
                     TimeSpan duration = timeOut - timeIn;
                     lbltimeuse.Text = duration.TotalHours.ToString("0.00", cultureDot) + " h";
 
-                    // 6. Điện tiêu thụ (Thêm kWh) -> 0.40 kWh
+                    // 6. Điện tiêu thụ (kWh)
                     double kwh = 0;
                     if (row["soKwhTieuThu"].ToString() != "")
-                        kwh = Convert.ToDouble(row["soKwhTieuThu"]);
+                        kwh = Convert.ToDouble(row["soKwhTieuThu"], cultureDot); // Đảm bảo đọc đúng dấu chấm
 
                     lblelecuse.Text = kwh.ToString("0.00", cultureDot) + " kWh";
 
-                    // 7. Giảm giá (Thêm %) -> 5%
+                    // 7. Giảm giá (%)
                     lbldiscount.Text = row["GiamGia"].ToString() + "%";
 
-                    // --- 8. THÀNH TIỀN (SỬA THEO YÊU CẦU CỦA BẠN) ---
-                    double tongTien = 0;
+                    // --- 8. THÀNH TIỀN (SỬA LỖI HIỂN THỊ 0,0 VNĐ) ---
+                    // Cột tongTien đang lưu đơn vị "VNĐ" (Ví dụ: 3.5)
+                    double tongTien_K_VND = 0;
                     if (row["tongTien"].ToString() != "")
-                        tongTien = Convert.ToDouble(row["tongTien"]);
+                        // Sử dụng cultureDot để đọc đúng số thập phân (dấu chấm) từ DB
+                        tongTien_K_VND = Convert.ToDouble(row["tongTien"], cultureDot);
 
-                    // Chia cho 1000 để đổi đơn vị
-                    double tienHienThi = tongTien / 1000;
+                    // NHÂN NGƯỢC LẠI VỚI 1000 để ra VNĐ (Ví dụ: 3.5 * 1000 = 3500)
+                    double tienThucTe_VN_D = tongTien_K_VND * 1000;
 
-                    // Dùng "N1" để BẮT BUỘC hiện 1 số lẻ (4 -> 4,0)
-                    // Kết quả: "4,0 VNĐ" hoặc "1.000,0 VNĐ"
-                    lbltotal.Text = tienHienThi.ToString("N1", cultureVN) + " VNĐ";
+                    // Hiển thị dạng tiền tệ (N0: 3,500 VNĐ, N1: 3,500.0 VNĐ)
+                    lbltotal.Text = tienThucTe_VN_D.ToString("N1", cultureVN) + " VNĐ";
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi hiển thị: " + ex.Message);
+                MessageBox.Show("Lỗi hiển thị hóa đơn: " + ex.Message);
             }
         }
 

@@ -64,6 +64,7 @@
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.lblnamelogin);
             this.panel2.Controls.Add(this.txtnamelogin);
             this.panel2.Location = new System.Drawing.Point(3, 3);
@@ -95,7 +96,6 @@
             this.txtnamelogin.Size = new System.Drawing.Size(300, 30);
             this.txtnamelogin.TabIndex = 0;
             this.txtnamelogin.Tag = "Username";
-            this.txtnamelogin.Text = "admin";
             this.txtnamelogin.TextChanged += new System.EventHandler(this.txtnamelogin_TextChanged);
             // 
             // panel3
@@ -132,7 +132,6 @@
             this.txtpassword.Size = new System.Drawing.Size(300, 30);
             this.txtpassword.TabIndex = 1;
             this.txtpassword.Tag = "Username";
-            this.txtpassword.Text = "admin";
             this.txtpassword.TextChanged += new System.EventHandler(this.txtpassword_TextChanged);
             // 
             // btnlogin
@@ -153,6 +152,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.btnlogin);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
@@ -167,10 +167,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(427, 310);
             this.Controls.Add(this.lblshow);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmlogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Đăng nhập";
